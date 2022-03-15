@@ -38,10 +38,10 @@ router.post('/', (req, res) => {
 
         if( nombreCategoria) {
             conn.query("INSERT INTO categorias(nombreCategoria) VALUES('"+nombreCategoria+"')", () =>{
-                res.send('Insertado en categorias');
+                res.send("1");
             })
         }else{
-            res.send('Error en los parámetros')
+            res.send("0")
         }
     })
 })
@@ -53,11 +53,11 @@ router.delete('/', (req, res) => {
         const idCategoria = req.query.idCategoria;
 
         if(idCategoria){
-            conn.query("DELETE FROM categorias WHERE idCategoria LIKE ?", idCategoria, () =>{
-                res.send('Eliminado Correctamente');
+            conn.query("DELETE FROM categorias WHERE idCategoria = ?", idCategoria, () =>{
+                res.send("1");
             })
         }else{
-            res.send('Error en los parámetros');
+            res.send("0");
         }
 
     })
@@ -72,10 +72,10 @@ router.put('/', (req, res) =>{
 
         if(idCategoria && nombreCategoria){
             conn.query("UPDATE categorias SET nombreCategoria = '"+nombreCategoria+"' WHERE idCategoria = " + idCategoria, ()=>{
-                res.send('Modificado correctamente');
+                res.send("1");
             })
         }else{
-            res.send('Error en los parámetros');
+            res.send("0");
         }
     })
 })

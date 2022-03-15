@@ -4,13 +4,13 @@ const router = Router()
 // Obtener todos o uno
 router.get('/', (req, res) => {
     
-    const idApunte = req.query.idApunte;
+    const idCategoriaFK = req.query.idCategoriaFK;
 
-    if(idApunte){
+    if(idCategoriaFK){
         req.getConnection((err, conn) =>{
             if(err) return res.send(err);
         
-            conn.query('SELECT * FROM apuntes WHERE idApunte LIKE ?;', idApunte, (err, row) =>{
+            conn.query('SELECT * FROM apuntes WHERE idCategoriaFK = ?;', idCategoriaFK, (err, row) =>{
                 if (err) return res.send('Error en la consulta');
                 res.json(row);
             })
@@ -36,10 +36,10 @@ router.post('/', (req, res) => {
 
         if( fechaApunte && descripcionApunte && idCategoriaFK) {
             conn.query("INSERT INTO apuntes(fechaApunte, descripcionApunte, idCategoriaFK) VALUES('"+fechaApunte+"', '"+descripcionApunte+"', "+idCategoriaFK+")", () =>{
-                res.send('Insertado en Apuntes');
+                res.send("1");
             })
         }else{
-            res.send('Error en los parámetros')
+            res.send("0")
         }
     })
 })
@@ -51,11 +51,11 @@ router.delete('/', (req, res) => {
         const idApunte = req.query.idApunte;
 
         if(idApunte){
-            conn.query("DELETE FROM apuntes WHERE idApunte LIKE ?", idApunte, () =>{
-                res.send('Eliminado Correctamente');
+            conn.query("DELETE FROM apuntes WHERE idApunte = ?", idApunte, () =>{
+                res.send("1");
             })
         }else{
-            res.send('Error en los parámetros');
+            res.send("0");
         }
 
     })
@@ -69,10 +69,10 @@ router.put('/', (req, res) =>{
 
         if(idApunte && fechaApunte && descripcionApunte && idCategoriaFK){
             conn.query("UPDATE apuntes SET fechaApunte = '"+fechaApunte+"', descripcionApunte = '"+descripcionApunte+"', idCategoriaFK = "+idCategoriaFK+" WHERE idApunte = " + idApunte, ()=>{
-                res.send('Modificado correctamente');
+                res.send("1");
             })
         }else{
-            res.send('Error en los parámetros');
+            res.send("0");
         }
     })
 })
