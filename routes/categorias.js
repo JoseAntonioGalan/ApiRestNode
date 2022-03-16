@@ -53,8 +53,9 @@ router.delete('/', (req, res) => {
         const idCategoria = req.query.idCategoria;
 
         if(idCategoria){
-            conn.query("DELETE FROM categorias WHERE idCategoria = ?", idCategoria, () =>{
-                res.send("1");
+            conn.query("DELETE FROM categorias WHERE idCategoria = ?", idCategoria, (err) =>{
+                if(err) return res.sendStatus(404);
+                res.sendStatus(200);
             })
         }else{
             res.send("0");

@@ -51,8 +51,9 @@ router.delete('/', (req, res) => {
         const idApunte = req.query.idApunte;
 
         if(idApunte){
-            conn.query("DELETE FROM apuntes WHERE idApunte = ?", idApunte, () =>{
-                res.send("1");
+            conn.query("DELETE FROM apuntes WHERE idApunte = ?", idApunte, (err) =>{
+                if(err) return res.sendStatus(404);
+                res.sendStatus(200);
             })
         }else{
             res.send("0");
